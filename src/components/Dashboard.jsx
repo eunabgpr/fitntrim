@@ -1,8 +1,20 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function Dashboard() {
   const location = useLocation();
-  const role = location.state?.role || "member"; // default fallback
+  const navigate = useNavigate();
+  const role = location.state?.role || "member"; // fallback role
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate("/signin"); // 👈 redirect to SignIn
+    } catch (err) {
+      console.error("Sign out error:", err);
+    }
+  };
 
   return (
     <div>
@@ -39,6 +51,8 @@ export default function Dashboard() {
           </ul>
         </>
       )}
+
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }

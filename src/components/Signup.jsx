@@ -16,7 +16,7 @@ export default function Signup() {
       await setDoc(doc(db, "users", userCred.user.uid), {
         name,
         email,
-        role,
+         role: role,
         plan: "Basic",
         planStart: Timestamp.now(),
         planEnd: Timestamp.fromDate(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)),
